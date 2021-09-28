@@ -1,0 +1,29 @@
+{
+  "name": "CnC",
+  "version": "1.0.0",
+  "description": "The Cross and Crowns Ministry",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Michyjones/CnC.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Michyjones/CnC/issues"
+  },
+  "homepage": "https://github.com/Michyjones/CnC#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-fileupload": "^1.2.1",
+    "mongoose": "^5.12.7",
+    "multiparty": "^4.2.2",
+    "nodemailer": "^6.6.0"
+  }
+}
