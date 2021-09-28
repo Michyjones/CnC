@@ -1,4 +1,5 @@
 const express = require("express");
+const fileUpload = require("express-fileupload");
 const app = express();
 const mongoose = require("mongoose");
 
@@ -8,6 +9,7 @@ const nodemailer = require("nodemailer");
 require("dotenv/config");
 
 app.use(cors());
+app.use(fileUpload());
 app.use(express.json());
 app.use("/", router);
 
@@ -27,6 +29,23 @@ contactEmail.verify((error) => {
   }
 });
 
+
+router.post("/upload", (req, res) => {
+    if(req.files === null){
+      return res.status (400).json({msg:"No file uploaded"})
+    }
+    const file = req.files.file;
+
+    file.mv(`${__dirname}/client/public/uploads/${file.name}`, err => {
+      if(err){
+        console.log(err)
+        return res.status(500).send(err)
+
+      }
+      res.json({fileName:file.name, filePath:`/uploads/${file.name}`})
+    });
+
+});
 router.post("/contact", (req, res) => {
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
