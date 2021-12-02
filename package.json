@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "The Cross and Crowns Ministry",
   "main": "index.js",
+  "createAdmin": "createAdmin.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -24,6 +25,7 @@
     "express-fileupload": "^1.2.1",
     "mongoose": "^5.12.7",
     "multiparty": "^4.2.2",
-    "nodemailer": "^6.6.0"
+    "nodemailer": "^6.6.0",
+    "prompt": "^1.2.0"
   }
 }
