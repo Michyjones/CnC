@@ -16,6 +16,8 @@ app.use('/', router);
 
 const contactEmail = nodemailer.createTransport({
   service: 'gmail',
+  host:'smtp.gmail.com',
+  secure: false,
   auth: {
     user: process.env.EMAIL,
     pass: process.env.PASS,
