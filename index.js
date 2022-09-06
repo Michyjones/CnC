@@ -2,6 +2,7 @@ const express = require('express');
 const fileUpload = require('express-fileupload');
 const app = express();
 const mongoose = require('mongoose');
+const config = require('config');
 
 
 const router = express.Router();
@@ -9,12 +10,19 @@ const cors = require('cors');
 const nodemailer = require('nodemailer');
 require('dotenv/config');
 const users = require('./routes/users');
+const auth = require('./routes/auth');
 
 app.use(cors());
 app.use(fileUpload());
 app.use(express.json());
 app.use('/', router);
 app.use('/api/register', users);
+app.use('/api/auth', auth);
+
+if (!config.get('PrivateKey')) {
+  console.error('FATAL ERROR: PrivateKey is not defined.');
+  process.exit(1);
+}
 
 const contactEmail = nodemailer.createTransport({
   service: 'gmail',
