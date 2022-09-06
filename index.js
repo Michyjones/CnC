@@ -8,14 +8,18 @@ const router = express.Router();
 const cors = require('cors');
 const nodemailer = require('nodemailer');
 require('dotenv/config');
+const users = require('./routes/users');
 
 app.use(cors());
 app.use(fileUpload());
 app.use(express.json());
 app.use('/', router);
+app.use('/api/register', users);
 
 const contactEmail = nodemailer.createTransport({
   service: 'gmail',
+  host:'smtp.gmail.com',
+  secure: false,
   auth: {
     user: process.env.EMAIL,
     pass: process.env.PASS,
@@ -94,31 +98,21 @@ router.post('/request', (req, res) => {
   });
 });
 
-mongoose.connect(
-  process.env.DB_CONNECTION,
-  { userNewUrlParser: true, useUnifiedTopology: true },
-  () => console.log('Connected to DB')
-);
-const port = process.env.PORT || 5000;
+const connectDatabase = async () => {
+  try {
+    
+    await mongoose.connect(process.env.DB_CONNECTION);
+
+    console.log("Connected to Database");
+  } catch (error) {
+    console.log(error);
+    process.exit(1);
+  }
+};
+
+connectDatabase();
+
+const port = process.env.PORT || 5004;
 app.listen(port, () => console.info(`Listening on port ${port}...`));
 
-const schema = {
-  properties: {
-    username: {
-      pattern: /^[a-zA-Z\s\-]+$/,
-      message: 'Username must contain only letters, spaces, or dashes.',
-      required: true,
-      description: 'Enter username',
-    },
-    password: {
-      hidden: true,
-      required: true,
-      description: 'Enter password',
-    },
-    confirmPassword: {
-      hidden: true,
-      required: true,
-      description: 'Confirm password',
-    },
-  },
-};
+
