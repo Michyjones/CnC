@@ -19,11 +19,17 @@
   },
   "homepage": "https://github.com/Michyjones/CnC#readme",
   "dependencies": {
+    "@hapi/joi": "^15.0.3",
+    "bcrypt": "^5.0.1",
+    "config": "3.3.1",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-fileupload": "^1.2.1",
-    "mongoose": "^5.12.7",
+    "joi": "^17.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.21",
+    "mongoose": "^6.5.4",
     "multiparty": "^4.2.2",
     "nodemailer": "^6.6.0",
     "prompt": "^1.2.0"
