@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "The Cross and Crowns Ministry",
   "main": "index.js",
-  "createAdmin": "createAdmin.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
