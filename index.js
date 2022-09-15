@@ -1,8 +1,11 @@
 const express = require('express');
-const fileUpload = require('express-fileupload');
 const app = express();
 const mongoose = require('mongoose');
 const config = require('config');
+const multer = require('multer');
+const { memoryStorage } = require('multer')
+const storage = memoryStorage()
+const upload = multer({ storage })
 
 
 const router = express.Router();
@@ -11,10 +14,12 @@ const nodemailer = require('nodemailer');
 require('dotenv/config');
 const users = require('./routes/users');
 const auth = require('./routes/auth');
+const uploadNotes = require("./s3upload");
+
 
 app.use(cors());
-app.use(fileUpload());
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }))
 app.use('/', router);
 app.use('/api/register', users);
 app.use('/api/auth', auth);
@@ -42,20 +47,15 @@ contactEmail.verify((error) => {
   }
 });
 
-router.post('/upload', (req, res) => {
-  if (req.files === null) {
-    return res.status(400).json({ msg: 'No file uploaded' });
-  }
-  const file = req.files.file;
 
-  file.mv(`${__dirname}/client/public/uploads/${file.name}`, (err) => {
-    if (err) {
-      console.log(err);
-      return res.status(500).send(err);
-    }
-    res.json({ fileName: file.name, filePath: `/uploads/${file.name}` });
-  });
-});
+router.post('/upload', upload.single('audiofile'), async (req, res) => {
+  const filename = 'luke';
+  const bucketname = 'cncbucket';
+  const file = req.file.buffer
+  const link = await uploadNotes(filename, bucketname, file)
+  res.send(link)
+})
+
 router.post('/contact', (req, res) => {
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
