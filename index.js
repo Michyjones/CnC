@@ -49,7 +49,7 @@ contactEmail.verify((error) => {
 
 
 router.post('/upload', upload.single('audiofile'), async (req, res) => {
-  const filename = 'luke';
+  const filename =req.file.originalname;
   const bucketname = 'cncbucket';
   const file = req.file.buffer
   const link = await uploadNotes(filename, bucketname, file)

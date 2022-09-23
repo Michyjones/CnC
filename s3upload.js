@@ -8,7 +8,7 @@ const uploadNotes = (filename, bucketname, file) => {
 
     return new Promise((resolve, reject) => {
         const params = {
-            Key: filename,
+            Key: `${filename}`,
             Bucket: bucketname,
             Body: file,
             ContentType: 'audio/mpeg',
